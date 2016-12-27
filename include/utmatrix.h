@@ -9,7 +9,7 @@
 #define __TMATRIX_H__
 
 #include <iostream>
-
+#include <stdexcept>
 using namespace std;
 
 const int MAX_VECTOR_SIZE = 100000000;
@@ -66,7 +66,7 @@ TVector<ValType>::TVector(int s, int si) {
     StartIndex = si;
     Size = s;
   } else {
-    throw 1;
+    throw std::logic_error("bad StartIndex or Size");
   }
 } /*-------------------------------------------------------------------------*/
 
@@ -91,7 +91,7 @@ ValType& TVector<ValType>::operator[](int pos) {
   if ((pos >= 0) && (pos - StartIndex < Size))
     return pVector[pos - StartIndex];
   else
-    throw 1;
+    throw std::logic_error(" bad positoin");
 }/*-------------------------------------------------------------------------*/
 
 template <class ValType>  // сравнение
@@ -165,7 +165,7 @@ TVector<ValType> TVector<ValType>::operator+(const TVector<ValType> &v) {
       res[i] = pVector[i] + v.pVector[i];
     return res;
   } else {
-    throw 1;
+    throw std::logic_error("not equal size of vectors");
   }
 } /*------------------------------------------------------------------------*/
 
@@ -177,7 +177,7 @@ TVector<ValType> TVector<ValType>::operator-(const TVector<ValType> &v) {
       res[i] = pVector[i] - v.pVector[i];
     return res;
   } else {
-    throw 1;
+    throw std::logic_error("not equal size of vectors");
   }
 } /*-------------------------------------------------------------------------*/
 
@@ -189,7 +189,7 @@ ValType TVector<ValType>::operator*(const TVector<ValType> &v) {
       res += pVector[i] * v.pVector[i];
     return res;
   } else {
-    throw 1;
+    throw std::logic_error("not equal size of vectors");
   }
 } /*-------------------------------------------------------------------------*/
 
@@ -226,7 +226,7 @@ TMatrix<ValType>::TMatrix(int s) : TVector<TVector<ValType> >(s) {
     for (int i = 0; i < s; i++)
       pVector[i] = TVector<ValType>(s - i, i);
   } else {
-  throw 1;
+    throw std::logic_error("is not correct size");
   }
 } /*-------------------------------------------------------------------------*/
 
